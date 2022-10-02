@@ -1,0 +1,42 @@
+@import "./_mixins.scss";
+@import "./_variables.scss";
+@import "./_breakPoints.scss";
+@import "./_reset.scss";
+@import "./_fonts.scss";
+/*START:defaults like box-sizing, font for content */
+body {
+	font-family: $font_regular;
+	color: $color_text_primary;
+	line-height: 1.5;
+	overflow-y: visible !important;
+}
+
+body {
+	padding-right: constant(safe-area-inset-right);
+	padding-right: env(safe-area-inset-right);
+	padding-left: constant(safe-area-inset-left);
+	padding-left: env(safe-area-inset-left);
+}
+
+button,
+input {
+	font-family: $font_regular;
+}
+
+* {
+	box-sizing: border-box;
+	line-height: 1.5;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+}
+#__next {
+	height: 100%;
+}
+
+/*END:defaults like box-sizing, font for content */
