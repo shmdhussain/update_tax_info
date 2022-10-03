@@ -106,7 +106,9 @@ export default function Home() {
 		clientSideValidationMsgs,
 	} = state;
 
-	const onFormsubmit = async (e) => {
+	/*START: form submit handler*/
+
+	async function onFormsubmit(e) {
 		e.preventDefault();
 
 		//validate ,if all ok proceed to update action else fill the validation error and then return
@@ -149,8 +151,8 @@ export default function Home() {
 				});
 			}
 		}
-	};
-
+	}
+	/*END: form submit handler*/
 	return (
 		<>
 			<Head>
@@ -209,6 +211,7 @@ export default function Home() {
 							labelName={"Tax Identifier No"}
 							fieldValue={taxInfo}
 							dispatch={dispatch}
+							country={country.toLowerCase()}
 						></TaxInfo>
 					</div>
 

@@ -2,7 +2,7 @@ import styles from "./CountryInput.module.scss";
 import InputFieldErrorMsg from "..//InputFieldErrorMsg";
 import predefinedCountriesList from "../../dummyData/countries.json";
 import { useState, useRef } from "react";
-export default function Input({
+export default function CountryInput({
 	dispatch,
 	isUpdating,
 	clientSideValidationMsgs,
@@ -13,7 +13,7 @@ export default function Input({
 	const [countryAutoList, setCountryAutoList] = useState(false);
 	let countriesList = predefinedCountriesList;
 
-	const inputElRef = useRef();
+	/*START: filtered country list from the text entered in the text box*/
 	if (fieldValue) {
 		countriesList = predefinedCountriesList.filter((country) => {
 			let offset = country.name.toLowerCase().indexOf(fieldValue.toLowerCase());
@@ -22,6 +22,7 @@ export default function Input({
 			}
 		});
 	}
+	/*END: filtered country list from the text entered in the text box*/
 
 	return (
 		<>
@@ -34,8 +35,7 @@ export default function Input({
 				id={fieldName}
 				type="text"
 				value={fieldValue}
-				ref={inputElRef}
-				onFocus={() => {
+				onFocus={(e) => {
 					setCountryAutoList(true);
 				}}
 				onChange={(e) => {

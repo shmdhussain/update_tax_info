@@ -55,14 +55,13 @@ describe("validate taxInfo for Canada", () => {
 		});
 	});
 });
-describe("validate taxInfo for other Countries", () => {
+describe("validate taxInfo for  Country", () => {
 	for (let index = 0; index < predefinedCountries.length; index++) {
 		let country;
 		country = predefinedCountries[index].name.toLowerCase();
 		if (country === "united states of america" || country === "canada") {
 			continue;
 		}
-		console.log("country", country);
 		it("check when taxInfo is empty for country:" + country, () => {
 			expect(validateTaxInfo(" ", country)).toEqual({
 				error: true,
@@ -84,7 +83,7 @@ describe("validate taxInfo for other Countries", () => {
 			}
 		);
 		it("check when taxInfo is in correct format for country:" + country, () => {
-			expect(validateTaxInfo("12345", country)).toEqual({
+			expect(validateTaxInfo("1234567890", country)).toEqual({
 				error: false,
 				messages: [],
 			});
