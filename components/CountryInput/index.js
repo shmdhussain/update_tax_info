@@ -1,7 +1,7 @@
 import styles from "./CountryInput.module.scss";
 import InputFieldErrorMsg from "..//InputFieldErrorMsg";
 import predefinedCountriesList from "../../dummyData/countries.json";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 export default function CountryInput({
 	dispatch,
 	isUpdating,
@@ -13,6 +13,7 @@ export default function CountryInput({
 	const [countryAutoList, setCountryAutoList] = useState(false);
 	let countriesList = predefinedCountriesList;
 
+	let countryInputElRef = useRef();
 	/*START: filtered country list from the text entered in the text box*/
 	if (fieldValue) {
 		countriesList = predefinedCountriesList.filter((country) => {
@@ -23,6 +24,22 @@ export default function CountryInput({
 		});
 	}
 	/*END: filtered country list from the text entered in the text box*/
+
+	/*START: hide the auto complete list when user is clicked outside fo the input*/
+
+	useEffect(() => {
+		function handler(e) {
+			if (!(e.target === countryInputElRef.current)) {
+				setCountryAutoList(false);
+			}
+		}
+		document.addEventListener("click", handler);
+
+		return () => {
+			document.removeEventListener("click", handler);
+		};
+	}, []);
+	/*END: hide the auto complete list when user is clicked outside fo the input*/
 
 	return (
 		<>
@@ -35,6 +52,7 @@ export default function CountryInput({
 				id={fieldName}
 				type="text"
 				value={fieldValue}
+				ref={countryInputElRef}
 				onFocus={(e) => {
 					setCountryAutoList(true);
 				}}

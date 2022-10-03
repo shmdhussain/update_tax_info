@@ -9,6 +9,7 @@ import CountryInput from "../components/CountryInput";
 import TaxInfo from "../components/TaxInfo";
 import getvalidateMsgsForTaxForm from "../utils/getvalidateMsgsForTaxForm.js";
 import updateTaxInfo from "../utils/updateTaxInfo";
+import updateTaxInfoReducer from "../utils/updateTaxInfoReducer";
 
 /*START: initial states for the client side error msgs and initial state value for the forms*/
 
@@ -38,62 +39,6 @@ const initialState = {
 
 /*END: initial states for the client side error msgs and initial state value for the forms*/
 
-/*START: reducer which takes action object with type and decide based on the type, usefull for form and involves more states interconnected and thinking from user perspective*/
-function updateTaxInfoReducer(state, action) {
-	switch (action.type) {
-		case "field": {
-			let isSuccessfullyUpdated = state.isSuccessfullyUpdated;
-			if (action.payload.trim()) {
-				isSuccessfullyUpdated = "";
-			}
-			return {
-				...state,
-				isSuccessfullyUpdated,
-				[action.fieldName]: action.payload.trim(),
-			};
-		}
-		case "updateInProgress": {
-			return {
-				...state,
-				isUpdating: true,
-				serverError: "",
-				clientSideValidationMsgs: initialClientSideValidationMsgs,
-			};
-		}
-		case "updateSuccess": {
-			return {
-				...state,
-				isSuccessfullyUpdated: true,
-				isUpdating: false,
-				username: "",
-				country: "",
-				taxInfo: "",
-			};
-		}
-		case "serverSideerror": {
-			return {
-				...state,
-				serverError: "unable to update your tax information!",
-				isSuccessfullyUpdated: false,
-				isUpdating: false,
-			};
-		}
-		case "clientSideError": {
-			return {
-				...state,
-				serverError: "",
-				isSuccessfullyUpdated: false,
-				isUpdating: false,
-				clientSideValidationMsgs: action.payload,
-			};
-		}
-
-		default:
-			return state;
-	}
-}
-/*END: reducer which takes action object with type and decide based on the type, usefull for form and involves more states interconnected and thinking from user perspective*/
-
 export default function Home() {
 	const [state, dispatch] = useReducer(updateTaxInfoReducer, initialState);
 	const {
@@ -118,8 +63,9 @@ export default function Home() {
 			taxInfo
 		);
 
-		let errorInForm = false;
+		/*START: check validation in form if error there*/
 
+		let errorInForm = false;
 		for (const validationMsgItemKey in newClientValidateMsgs) {
 			if (
 				Object.hasOwnProperty.call(newClientValidateMsgs, validationMsgItemKey)
@@ -131,6 +77,7 @@ export default function Home() {
 				}
 			}
 		}
+		/*END: check validation in form if error there*/
 		if (errorInForm) {
 			dispatch({
 				type: "clientSideError",
@@ -139,6 +86,9 @@ export default function Home() {
 		} else {
 			dispatch({
 				type: "updateInProgress",
+				payload: {
+					clientSideValidationMsgs: initialClientSideValidationMsgs,
+				},
 			});
 			try {
 				await updateTaxInfo(username, country, taxInfo);
@@ -162,6 +112,7 @@ export default function Home() {
 				<h1 className={`${styles.h1}`}>Enter Your Tax Information</h1>
 
 				<form
+					autoComplete="off"
 					onSubmit={onFormsubmit}
 					className={`${styles.form}`}
 					action="/api/tax-info"
