@@ -3,7 +3,7 @@
 
 ![](https://github.com/shmdhussain/update_tax_info/workflows/unit%20test/badge.svg)
 
-![end to end test](https://github.com/shmdhussain/update_tax_info/workflows/E2E/badge.svg)
+<!-- ![end to end test](https://github.com/shmdhussain/update_tax_info/workflows/E2E/badge.svg) -->
 
 
 ## How to install the project
