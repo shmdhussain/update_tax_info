@@ -14,6 +14,7 @@ export default function Input({
 				{labelName}
 			</label>
 			<input
+				data-cy={fieldName}
 				disabled={isUpdating}
 				className={`${styles.form_input_el}`}
 				id={fieldName}
@@ -28,6 +29,7 @@ export default function Input({
 				}
 			/>
 			<InputFieldErrorMsg
+				fieldName={fieldName}
 				clientSideValidationMsgs={clientSideValidationMsgs}
 			></InputFieldErrorMsg>
 		</>

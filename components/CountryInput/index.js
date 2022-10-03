@@ -47,6 +47,7 @@ export default function CountryInput({
 				{labelName}
 			</label>
 			<input
+				data-cy={fieldName}
 				disabled={isUpdating}
 				className={`${styles.form_input_el}`}
 				id={fieldName}
@@ -101,6 +102,7 @@ export default function CountryInput({
 				)}
 			</div>
 			<InputFieldErrorMsg
+				fieldName={fieldName}
 				clientSideValidationMsgs={clientSideValidationMsgs}
 			></InputFieldErrorMsg>
 		</>

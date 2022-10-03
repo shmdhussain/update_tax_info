@@ -119,7 +119,7 @@ export default function Home() {
 				>
 					<div className={`${styles.form_input_cont}`}>
 						{serverError ? (
-							<div className={`${styles.server_error_msg}`}>
+							<div data-cy="error_msg" className={`${styles.server_error_msg}`}>
 								<ErrorIcon
 									className={`${styles.server_error_msg_icon}`}
 								></ErrorIcon>
@@ -128,7 +128,10 @@ export default function Home() {
 						) : null}
 
 						{isSuccessfullyUpdated ? (
-							<div className={`${styles.server_success_msg}`}>
+							<div
+								data-cy="success_msg"
+								className={`${styles.server_success_msg}`}
+							>
 								Your Tax Info is successfully updated
 							</div>
 						) : null}
@@ -168,6 +171,7 @@ export default function Home() {
 
 					<div className={`${styles.button_cont}`}>
 						<button
+							data-cy="submit_tax_info"
 							disabled={isUpdating}
 							type="submit"
 							className={`${styles.button}`}

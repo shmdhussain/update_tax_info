@@ -18,6 +18,7 @@ export default function TaxInfo({
 				{labelName}
 			</label>
 			<input
+				data-cy={fieldName}
 				disabled={isUpdating}
 				className={`${styles.form_input_el}`}
 				id={fieldName}
@@ -46,6 +47,7 @@ export default function TaxInfo({
 				}}
 			/>
 			<InputFieldErrorMsg
+				fieldName={fieldName}
 				clientSideValidationMsgs={clientSideValidationMsgs}
 			></InputFieldErrorMsg>
 		</>
