@@ -3,6 +3,8 @@
 
 ![](https://github.com/shmdhussain/update_tax_info/workflows/unit%20test/badge.svg)
 
+![end to end test](https://github.com/shmdhussain/update_tax_info/workflows/E2E/badge.svg)
+
 
 ## How to install the project
 
@@ -35,4 +37,4 @@ clone the repo and run the following commands
 
 +   `npm i`
 +   `npm run configure-husky` # for configuring the pre commit hook to prettify the files
-+   `npm run dev` # this will start the local dev server on port 3000 with hot reload
++   `npm run dev` # this will start the local dev server on port 3030 with hot reload
