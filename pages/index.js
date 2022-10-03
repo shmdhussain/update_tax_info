@@ -2,11 +2,155 @@ import Head from "next/head";
 import ErrorIcon from "/public/icons/error.svg";
 
 import styles from "/pages/index.module.scss";
+import { useReducer } from "react";
+import ButtonLoader from "/components/ButtonLoader";
+import Input from "../components/Input";
+import CountryInput from "../components/CountryInput";
+import TaxInfo from "../components/TaxInfo";
+import getvalidateMsgsForTaxForm from "../utils/getvalidateMsgsForTaxForm.js";
+import updateTaxInfo from "../utils/updateTaxInfo";
+
+/*START: initial states for the client side error msgs and initial state value for the forms*/
+
+const initialClientSideValidationMsgs = {
+	username: {
+		error: false,
+		messages: [],
+	},
+	country: {
+		error: false,
+		messages: [],
+	},
+	taxInfo: {
+		error: false,
+		messages: [],
+	},
+};
+const initialState = {
+	username: "",
+	country: "",
+	taxInfo: "",
+	isUpdating: false,
+	serverError: "",
+	isSuccessfullyUpdated: false,
+	clientSideValidationMsgs: initialClientSideValidationMsgs,
+};
+
+/*END: initial states for the client side error msgs and initial state value for the forms*/
+
+/*START: reducer which takes action object with type and decide based on the type, usefull for form and involves more states interconnected and thinking from user perspective*/
+function updateTaxInfoReducer(state, action) {
+	switch (action.type) {
+		case "field": {
+			let isSuccessfullyUpdated = state.isSuccessfullyUpdated;
+			if (action.payload.trim()) {
+				isSuccessfullyUpdated = "";
+			}
+			return {
+				...state,
+				isSuccessfullyUpdated,
+				[action.fieldName]: action.payload.trim(),
+			};
+		}
+		case "updateInProgress": {
+			return {
+				...state,
+				isUpdating: true,
+				serverError: "",
+				clientSideValidationMsgs: initialClientSideValidationMsgs,
+			};
+		}
+		case "updateSuccess": {
+			return {
+				...state,
+				isSuccessfullyUpdated: true,
+				isUpdating: false,
+				username: "",
+				country: "",
+				taxInfo: "",
+			};
+		}
+		case "serverSideerror": {
+			return {
+				...state,
+				serverError: "unable to update your tax information!",
+				isSuccessfullyUpdated: false,
+				isUpdating: false,
+			};
+		}
+		case "clientSideError": {
+			return {
+				...state,
+				serverError: "",
+				isSuccessfullyUpdated: false,
+				isUpdating: false,
+				clientSideValidationMsgs: action.payload,
+			};
+		}
+
+		default:
+			return state;
+	}
+}
+/*END: reducer which takes action object with type and decide based on the type, usefull for form and involves more states interconnected and thinking from user perspective*/
 
 export default function Home() {
-	const onFormsubmit = () => {
-		console.log(`test_val`);
+	const [state, dispatch] = useReducer(updateTaxInfoReducer, initialState);
+	const {
+		username,
+		country,
+		taxInfo,
+		isUpdating,
+		serverError,
+		isSuccessfullyUpdated,
+		clientSideValidationMsgs,
+	} = state;
+
+	const onFormsubmit = async (e) => {
+		e.preventDefault();
+
+		//validate ,if all ok proceed to update action else fill the validation error and then return
+		let newClientValidateMsgs = getvalidateMsgsForTaxForm(
+			username,
+			country,
+			taxInfo
+		);
+
+		let errorInForm = false;
+
+		for (const validationMsgItemKey in newClientValidateMsgs) {
+			if (
+				Object.hasOwnProperty.call(newClientValidateMsgs, validationMsgItemKey)
+			) {
+				const validationMsgItem = newClientValidateMsgs[validationMsgItemKey];
+				if (validationMsgItem.error) {
+					errorInForm = true;
+					break;
+				}
+			}
+		}
+		if (errorInForm) {
+			dispatch({
+				type: "clientSideError",
+				payload: newClientValidateMsgs,
+			});
+		} else {
+			dispatch({
+				type: "updateInProgress",
+			});
+			try {
+				await updateTaxInfo(username, country, taxInfo);
+				dispatch({
+					type: "updateSuccess",
+				});
+			} catch (error) {
+				dispatch({
+					type: "serverSideerror",
+				});
+			}
+		}
 	};
+
 	return (
 		<>
 			<Head>
@@ -21,51 +165,61 @@ export default function Home() {
 					action="/api/tax-info"
 				>
 					<div className={`${styles.form_input_cont}`}>
-						<label className={`${styles.form_input_label}`} htmlFor="username">
-							Username
-						</label>
-						<input
-							className={`${styles.form_input_el}`}
-							id="username"
-							type="text"
-						/>
-						<div className={`${styles.form_input_info} ${styles.error}`}>
-							<ErrorIcon className={`${styles.icon}`}></ErrorIcon>
-							<div>
-								<div className={`${styles.info_txt}`}>Error message 1</div>
-								<div className={`${styles.info_txt}`}>Error message 2</div>
+						{serverError ? (
+							<div className={`${styles.server_error_msg}`}>
+								<ErrorIcon
+									className={`${styles.server_error_msg_icon}`}
+								></ErrorIcon>
+								{serverError}
 							</div>
-						</div>
+						) : null}
+
+						{isSuccessfullyUpdated ? (
+							<div className={`${styles.server_success_msg}`}>
+								Your Tax Info is successfully updated
+							</div>
+						) : null}
+
+						<Input
+							isUpdating={isUpdating}
+							clientSideValidationMsgs={clientSideValidationMsgs["username"]}
+							fieldName={"username"}
+							labelName={"Username"}
+							fieldValue={username}
+							dispatch={dispatch}
+						></Input>
 					</div>
 
 					<div className={`${styles.form_input_cont}`}>
-						<label className={`${styles.form_input_label}`} htmlFor="country">
-							Country
-						</label>
-						<input
-							className={`${styles.form_input_el}`}
-							id="country"
-							type="text"
-						/>
+						<CountryInput
+							isUpdating={isUpdating}
+							clientSideValidationMsgs={clientSideValidationMsgs["country"]}
+							fieldName={"country"}
+							labelName={"Country"}
+							fieldValue={country}
+							dispatch={dispatch}
+						></CountryInput>
 					</div>
 
 					<div className={`${styles.form_input_cont}`}>
-						<label
-							className={`${styles.form_input_label}`}
-							htmlFor="tax_identifier_no"
-						>
-							Tax Identifier No
-						</label>
-						<input
-							className={`${styles.form_input_el}`}
-							id="tax_identifier_no"
-							type="text"
-						/>
+						<TaxInfo
+							isUpdating={isUpdating}
+							clientSideValidationMsgs={clientSideValidationMsgs["taxInfo"]}
+							fieldName={"taxInfo"}
+							labelName={"Tax Identifier No"}
+							fieldValue={taxInfo}
+							dispatch={dispatch}
+						></TaxInfo>
 					</div>
 
 					<div className={`${styles.button_cont}`}>
-						<button type="button" className={`${styles.button}`}>
-							Submit Your Tax Info
+						<button
+							disabled={isUpdating}
+							type="submit"
+							className={`${styles.button}`}
+						>
+							{isUpdating ? <ButtonLoader></ButtonLoader> : null}Submit Your Tax
+							Info
 						</button>
 					</div>
 				</form>

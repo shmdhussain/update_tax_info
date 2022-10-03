@@ -1,0 +1,51 @@
+{
+	"emptyTaxInfo": "Tax Info Number should not be empty",
+	"united states of america": {
+		"enterInCorrectFormat": "Please enter in correct format for ex: [4 digits]-[3 letters]-[5 or 7 digits]"
+	},
+	"canada": {
+		"enterInCorrectFormat": "Please enter in correct format for ex: [10 symbols digits or letters A,B or D]-[2 letters]"
+	},
+	"india": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"united arab emirates": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"ukraine": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"pakistan": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"united kingdom": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"china": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"egypt": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"france": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"spain": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"portugal": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"brazil": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"argentina": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"nigeria": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	},
+	"poland": {
+		"enterInCorrectFormat": "Please enter in correct format"
+	}
+}

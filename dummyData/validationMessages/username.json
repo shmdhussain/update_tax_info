@@ -1,0 +1,4 @@
+{
+	"emptyUsername": "username should not be empty",
+	"lessThanThreeChars": "username should be more than 3 character"
+}

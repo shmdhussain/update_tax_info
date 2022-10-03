@@ -128,51 +128,48 @@ button.button {
 		width: 50ch;
 	}
 }
-.form_input_label {
-	font-weight: bold;
-	color: $form_label_color;
-	padding-bottom: 8px;
-}
 
-.form_input_info {
-	display: grid;
-	grid-template-columns: 16px 1fr;
-	padding-top: 12px;
-	gap: 8px;
-	&.error {
-		color: $input_info_error_color;
-	}
-	.icon {
-		width: 100%;
-		height: 100%;
-	}
-	.info_txt {
-		line-height: 1;
-		padding-bottom: 2px;
-		&:last-child {
-			padding-bottom: 0;
-		}
+.server_error_msg {
+	margin-bottom: 16px;
+	border: 1px solid $input_info_error_color;
+	padding: 16px;
+	color: $input_info_error_color;
+	border-radius: 5px;
+
+	display: flex;
+
+	align-items: center;
+
+	.server_error_msg_icon {
+		width: 1em;
+		height: 1em;
+		margin-right: 8px;
 	}
 }
 
-.form_input_el {
-	font-size: 16px;
-	font-family: $font_regular;
-	line-height: 1;
-	height: 2.25rem;
-
-	padding: 0.25em 0.5em;
-	background-color: #fff;
-	border: 2px solid $input_border_color;
-	border-radius: 4px;
-
-	&:focus,
-	&:focus-visible {
-		outline: 3px solid transparent;
-		border-color: hsl(
+.server_success_msg {
+	margin-bottom: 16px;
+	border: 1px solid
+		hsl(
 			$input_border_color_focus_h,
 			$input_border_color_focus_s,
 			$input_border_color_focus_l
 		);
+	padding: 16px;
+	color: hsl(
+		$input_border_color_focus_h,
+		$input_border_color_focus_s,
+		$input_border_color_focus_l
+	);
+	border-radius: 5px;
+
+	display: flex;
+
+	align-items: center;
+
+	.server_success_msg_icon {
+		width: 1em;
+		height: 1em;
+		margin-right: 8px;
 	}
 }

@@ -1,0 +1,23 @@
+@import "/styles/_mixins.scss";
+@import "/styles/_variables.scss";
+@import "/styles/_breakPoints.scss";
+.form_input_info {
+	display: grid;
+	grid-template-columns: 16px 1fr;
+	padding-top: 12px;
+	gap: 8px;
+	&.error {
+		color: $input_info_error_color;
+	}
+	.icon {
+		width: 100%;
+		height: 100%;
+	}
+	.info_txt {
+		line-height: 1;
+		padding-bottom: 8px;
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+}

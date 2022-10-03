@@ -1,7 +1,8 @@
 {
 	"root": true,
-	"extends": ["eslint:recommended", "next/core-web-vitals"],
+	"extends": ["next/core-web-vitals"],
 	"plugins": ["testing-library"],
+
 	"overrides": [
 		// Only uses Testing Library lint rules in test files
 		{
@@ -9,6 +10,10 @@
 				"**/__tests__/**/*.[jt]s?(x)",
 				"**/?(*.)+(spec|test).[jt]s?(x)"
 			],
+			"env": {
+				"jest/globals": true
+			},
+			"plugins": ["jest"],
 			"extends": ["plugin:testing-library/react"]
 		}
 	]

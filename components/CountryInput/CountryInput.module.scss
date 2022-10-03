@@ -1,0 +1,99 @@
+@import "/styles/_mixins.scss";
+@import "/styles/_variables.scss";
+@import "/styles/_breakPoints.scss";
+.form_input_label {
+	font-weight: bold;
+	color: $form_label_color;
+	padding-bottom: 8px;
+}
+
+.form_input_info {
+	display: grid;
+	grid-template-columns: 16px 1fr;
+	padding-top: 12px;
+	gap: 8px;
+	&.error {
+		color: $input_info_error_color;
+	}
+	.icon {
+		width: 100%;
+		height: 100%;
+	}
+	.info_txt {
+		line-height: 1;
+		padding-bottom: 8px;
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+}
+
+.form_input_el {
+	font-size: 16px;
+	font-family: $font_regular;
+	line-height: 1;
+	height: 2.25rem;
+
+	padding: 0.25em 0.5em;
+	background-color: #fff;
+	border: 2px solid $input_border_color;
+	border-radius: 4px;
+
+	&:focus,
+	&:focus-visible {
+		outline: 3px solid transparent;
+		border-color: hsl(
+			$input_border_color_focus_h,
+			$input_border_color_focus_s,
+			$input_border_color_focus_l
+		);
+	}
+}
+
+.auto_list {
+	min-height: 50px;
+	max-height: 30vh;
+	overflow-y: auto;
+	border: 2px solid $input_border_color;
+	border-top: none;
+	display: none;
+
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	&.show_auto_list {
+		display: flex;
+	}
+}
+
+.auto_list_item_btn {
+	display: block;
+	width: 100%;
+	text-align: left;
+	cursor: pointer;
+	padding: 4px 8px;
+	flex: 0 0 setCountryAutoList(false);
+	width: 100%;
+	&:hover {
+		outline: none;
+		background-color: hsl(
+			$input_border_color_focus_h,
+			$input_border_color_focus_s,
+			85%
+		);
+	}
+	&:focus,
+	&:focus-visible {
+		outline: none;
+		background-color: hsl(
+			$input_border_color_focus_h,
+			$input_border_color_focus_s,
+			$input_border_color_focus_l
+		);
+		color: #fff;
+	}
+}
+.auto_list_item_no_results {
+	text-align: center;
+}
