@@ -1,4 +1,3 @@
-let validationCountrySpecificObj;
 export default validationCountrySpecificObj = {
 	"united states of america": {
 		validate: function (taxInfoNumber) {
