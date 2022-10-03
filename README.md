@@ -30,6 +30,14 @@ Also you can see the visualized output for coverage in `/coverage/lcov-report/in
 
 test is added for crucial cases.
 
+E2E test is added for one failure and success case
+To run that run the below command
+
+`npm run e2e:ci`
+
+to see in browser, cypress tool, run `npm run e2e`
+
+
 
 ## To contribute
 
