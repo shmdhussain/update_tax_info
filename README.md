@@ -2,8 +2,10 @@
 ---
 
 ![](https://github.com/shmdhussain/update_tax_info/workflows/unit%20test/badge.svg)
+![](https://github.com/shmdhussain/update_tax_info/workflows/E2E/badge.svg)
 
-<!-- ![end to end test](https://github.com/shmdhussain/update_tax_info/workflows/E2E/badge.svg) -->
+
+Git Repo Url : <https://github.com/shmdhussain/update_tax_info>
 
 
 ## How to install the project
